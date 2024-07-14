@@ -1,0 +1,42 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local function enableNoclip(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.State = Enum.HumanoidStateType.Running
+    end
+
+    local function onStepped()
+        for _, part in character:GetChildren() do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
+    end
+
+    local connection
+    connection = RunService.Stepped:Connect(function()
+        if not character.Parent then
+            connection:Disconnect()
+        else
+            onStepped()
+        end
+    end)
+end
+
+local function onCharacterAdded(character)
+    enableNoclip(character)
+end
+
+local function onPlayerAdded(player)
+    local character = player.Character or player.CharacterAdded:Wait()
+    onCharacterAdded(character)
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+for _, player in Players:GetPlayers() do
+    onPlayerAdded(player)
+end
+
+Players.PlayerAdded:Connect(onPlayerAdded)
