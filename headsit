@@ -1,8 +1,1 @@
-if msg == "headsit" then
-        headsit = true
-        while headsit == true do
-        z.Character.Humanoid.Sit = true
-z.Character.HumanoidRootPart.CFrame = zaya.Character.HumanoidRootPart.CFrame * CFrame.new(0, 2, 0.7)
-            task.wait()
-        end
-    end
+
