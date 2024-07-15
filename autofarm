@@ -1,0 +1,336 @@
+if not game:GetService("ReplicatedStorage"):FindFirstChild("Trade"):FindFirstChild("DeclineRequest") then return end
+if game:GetService("ReplicatedStorage"):FindFirstChild("PATCHED_ALL_AFTER_JD_VIDEO?4") then return end
+checkpart = Instance.new("Part");checkpart.Name = "PATCHED_ALL_AFTER_JD_VIDEO?4";checkpart.Parent = game:GetService("ReplicatedStorage")
+
+Player = game.Players.LocalPlayer
+Players = game.Players
+ScreenGui = Instance.new("ScreenGui")
+Frame = Instance.new("Frame")
+ScrollingFrame = Instance.new("ScrollingFrame")
+TextLabel = Instance.new("TextLabel")
+TextButton = Instance.new("TextButton")
+Image = Instance.new("ImageLabel")
+ImageButton = Instance.new("ImageButton")
+TextBox = Instance.new("TextBox")
+UiCorner = Instance.new("UICorner")
+ViewportFrame = Instance.new("ViewportFrame")
+ReplicatedStorage = game:GetService("ReplicatedStorage")
+TweenService = game:GetService("TweenService")
+RunService = game:GetService("RunService")
+UserInputService = game:GetService("UserInputService")
+hs = game:GetService("HttpService")
+CoreGui = game.CoreGui
+
+function RandomName()
+	local cs1 = math.random(12,24)
+	local cs2 = {}
+	for a = 1, cs1 do
+		cs2[a] = string.char(math.random(32, 126))
+	end
+	return table.concat(cs2)
+end
+
+task.wait(0.01)
+
+InDragg = false
+function SetDraggable(gui)
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+
+	gui.InputBegan:Connect(function(input)
+		if InDragg then return end
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			InDragg = true
+			dragStart = input.Position
+			startPos = gui.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+					InDragg = false
+				end
+			end)
+		end
+	end)
+
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+
+function CreateScreenGui(zname, ResetOnSpawn, Parent)
+	local obj = ScreenGui:Clone()
+	obj.Name = zname
+	obj.ResetOnSpawn = ResetOnSpawn
+	obj.Parent = Parent
+	return obj
+end
+
+function CreateFrame(zname, BackgroundColor3, BackgroundTransparency, Position, Size, Draggable, Visible, Parent, UiCornerT)
+	local obj = Frame:Clone()
+	obj.Name = zname
+	obj.BackgroundColor3 = BackgroundColor3
+	obj.BackgroundTransparency = BackgroundTransparency
+	obj.Position = Position
+	obj.Size = Size
+	if Draggable then SetDraggable(obj) end
+	obj.Visible = Visible
+	if UiCornerT then
+		local ui = UiCorner:Clone()
+		ui.Name = UiCornerT[1]
+		ui.CornerRadius = UiCornerT[2]
+		ui.Parent = obj
+	end
+	obj.Parent = Parent
+	return obj
+end
+
+function CreateTextButton(zname, BackgroundColor3, BackgroundTransparency, TFont, BorderSizePixel, Position, Size, TextColor3, Text, TextScaled, Visible, Parent, UiCornerT)
+	local obj = TextButton:Clone()
+	obj.Name = zname
+	obj.BackgroundColor3 = BackgroundColor3
+	obj.BackgroundTransparency = BackgroundTransparency
+	obj.Font = TFont
+	obj.BorderSizePixel = BorderSizePixel
+	obj.TextColor3 = TextColor3
+	obj.Text = Text
+	obj.TextScaled = TextScaled
+	obj.Position = Position
+	obj.Size = Size
+	obj.Visible = Visible
+	if UiCornerT then
+		local ui = UiCorner:Clone()
+		ui.Name = UiCornerT[1]
+		ui.CornerRadius = UiCornerT[2]
+		ui.Parent = obj
+	end
+	obj.Parent = Parent
+	return obj
+end
+
+function CreateTextLabel(zname, BackgroundColor3, BackgroundTransparency, TFont, BorderSizePixel, Position, Size, TextColor3, Text, TextScaled, Visible, Parent, UiCornerT)
+	local obj = TextLabel:Clone()
+	obj.Name = zname
+	obj.BackgroundColor3 = BackgroundColor3
+	obj.BackgroundTransparency = BackgroundTransparency
+	obj.Font = TFont
+	obj.BorderSizePixel = BorderSizePixel
+	obj.TextColor3 = TextColor3
+	obj.Text = Text
+	obj.TextScaled = TextScaled
+	obj.Position = Position
+	obj.Size = Size
+	obj.Visible = Visible
+	if UiCornerT then
+		local ui = UiCorner:Clone()
+		ui.Name = UiCornerT[1]
+		ui.CornerRadius = UiCornerT[2]
+		ui.Parent = obj
+	end
+	obj.Parent = Parent
+	return obj
+end
+
+function CreateTextBox(zname, BackgroundColor3, BackgroundTransparency, TFont, BorderSizePixel, Position, Size, TextColor3, Text, PlaceholderText, PlaceholderColor, TextScaled, Visible, Parent, UiCornerT, ClearTextOnFocus)
+	local obj = TextBox:Clone()
+	obj.Name = zname
+	obj.BackgroundColor3 = BackgroundColor3
+	obj.BackgroundTransparency = BackgroundTransparency
+	obj.Font = TFont
+	obj.BorderSizePixel = BorderSizePixel
+	obj.TextColor3 = TextColor3
+	obj.Text = Text
+	obj.ClearTextOnFocus = ClearTextOnFocus
+	obj.PlaceholderText = PlaceholderText
+	obj.PlaceholderColor3 = PlaceholderColor
+	obj.TextScaled = TextScaled
+	obj.Position = Position
+	obj.Size = Size
+	obj.Visible = Visible
+	if UiCornerT then
+		local ui = UiCorner:Clone()
+		ui.Name = UiCornerT[1]
+		ui.CornerRadius = UiCornerT[2]
+		ui.Parent = obj
+	end
+	obj.Parent = Parent
+	return obj
+end
+
+function CreateScrollingFrame(zname, Position, Size, BorderSizePixel, Visible, BottomImage, MidImage, TopImage, AutomaticCanvasSize, BackgroundTransparency, Parent, UiCornerT)
+	local obj = ScrollingFrame:Clone()
+	obj.Name = zname
+	obj.BorderSizePixel = BorderSizePixel
+	obj.Position = Position
+	obj.Size = Size
+	obj.BackgroundTransparency = BackgroundTransparency
+	obj.BottomImage = BottomImage
+	obj.MidImage = MidImage
+	obj.TopImage = TopImage
+	obj.AutomaticCanvasSize = AutomaticCanvasSize
+	obj.Visible = Visible
+	if UiCornerT then
+		local ui = UiCorner:Clone()
+		ui.Name = UiCornerT[1]
+		ui.CornerRadius = UiCornerT[2]
+		ui.Parent = obj
+	end
+	obj.Parent = Parent
+	return obj
+end
+
+task.wait(0.01)
+
+o1 = CreateScreenGui(RandomName(), false, CoreGui)
+o2 = CreateFrame(RandomName(), Color3.new(0, 0, 0), 0, UDim2.new(0.435, 0, 0.334, 0), UDim2.new(0.131, 0, 0.331, 0), true, true, o1, {RandomName(), UDim.new(0, 12)})
+o3 = CreateTextLabel(RandomName(), Color3.new(1, 1, 1), 1, Enum.Font.DenkOne, 0, UDim2.new(0, 0, 0, 0), UDim2.new(0.8, 0, 0.167, 0), Color3.new(1, 1, 1), "TP beachball autofarm", true, true, o2, false)
+o4 = CreateTextLabel(RandomName(), Color3.new(1, 1, 1), 1, Enum.Font.DenkOne, 0, UDim2.new(0, 0, 0.89, 0), UDim2.new(1, 0, 0.11, 0), Color3.new(1, 0, 0), "Note: if autofarm not started then wait for next round", true, true, o2, false)
+o5 = CreateTextButton(RandomName(), Color3.new(1, 1, 1), 1, Enum.Font.DenkOne, 0, UDim2.new(0.8, 0, 0, 0), UDim2.new(0.2, 0, 0.167, 0), Color3.new(1, 0, 0), "X", true, true, o2, false)
+o6 = CreateTextButton(RandomName(), Color3.new(1, 1, 1), 0, Enum.Font.DenkOne, 0, UDim2.new(0.1, 0, 0.203, 0), UDim2.new(0.8, 0, 0.167, 0), Color3.new(0, 1, 0), "Anti afk", true, true, o2, {RandomName(), UDim.new(0, 12)})
+o7 = CreateTextButton(RandomName(), Color3.new(1, 1, 1), 0, Enum.Font.DenkOne, 0, UDim2.new(0.1, 0, 0.467, 0), UDim2.new(0.8, 0, 0.167, 0), Color3.new(0, 0, 0), "Reset when full bag", true, true, o2, {RandomName(), UDim.new(0, 12)})
+o8 = CreateTextButton(RandomName(), Color3.new(1, 1, 1), 0, Enum.Font.DenkOne, 0, UDim2.new(0.1, 0, 0.723, 0), UDim2.new(0.8, 0, 0.167, 0), Color3.new(0, 0, 0), "Start autofarm", true, true, o2, {RandomName(), UDim.new(0, 12)})
+--o9 = CreateTextLabel(RandomName(), Color3.new(1, 1, 1), 1, Enum.Font.DenkOne, 0, UDim2.new(0, 0, 1, 0), UDim2.new(1, 0, 0.11, 0), Color3.new(1, 0, 0), "Note: if you make autofarm delay less than 4 you can be kicked", true, true, o2, false)
+o10 = CreateTextBox(RandomName(), Color3.new(1, 1, 1), 0, Enum.Font.DenkOne, 0, UDim2.new(-0.4, 0, 0.723, 0), UDim2.new(0.4, 0, 0.167, 0), Color3.new(1, 1, 1), "2", "Autofarm delay", Color3.new(0.694118, 0.694118, 0.694118), true, true, o2, {RandomName(), UDim.new(0, 12)}, false);o10.TextColor3 = Color3.new(0, 0, 0)
+o11 = CreateFrame(RandomName(), Color3.new(1, 0.666667, 1), 0, UDim2.new(0.752, 0, 0.053, 0), UDim2.new(0.052, 0, 0.11, 0), true, false, o1, {RandomName(), UDim.new(1, 0)})
+o12 = CreateTextButton(RandomName(), Color3.new(1, 1, 1), 1, Enum.Font.DenkOne, 0, UDim2.new(0.25, 0, 0.25, 0), UDim2.new(0.5, 0, 0.5, 0), Color3.new(1, 1, 1), "Open", true, true, o11, false)
+
+tppos = CFrame.new(-83.54086303710938, 139.61021423339844, 25.16151237487793)
+IsAutofarmStarted = false
+Autofarmenabled = false
+ResetPlayerOnDone = false
+function returncoincontaier()
+	if workspace:FindFirstChild("Normal") then
+		if workspace.Normal:FindFirstChild("CoinContainer") then
+			return workspace.Normal:FindFirstChild("CoinContainer")
+		end
+	end
+	return false
+end
+
+antiafkenabled = true
+function antiafkss()
+	local GC = getconnections or get_signal_cons
+	if GC then
+		for i,v in pairs(GC(Player.Idled)) do
+			if v["Disable"] then
+				v["Disable"](v)
+			elseif v["Disconnect"] then
+				v["Disconnect"](v)
+			end
+		end
+	else
+		local VirtualUser = cloneref(game:GetService("VirtualUser"))
+		Players.LocalPlayer.Idled:Connect(function()
+			VirtualUser:CaptureController()
+			VirtualUser:ClickButton2(Vector2.new())
+		end)
+	end
+end
+antiafkss()
+
+function Savetp(targ)
+	if Player.Character then
+		if Player.Character:FindFirstChild("HumanoidRootPart") then
+			Player.Character.HumanoidRootPart.CFrame = targ
+		end
+	end
+end
+
+spawn(function()
+	while true do
+		if IsAutofarmStarted and Autofarmenabled and Player.Character and returncoincontaier() then
+			Savetp(tppos)
+			for _, v in pairs(returncoincontaier():GetChildren()) do
+				if v:GetAttribute("CoinID") == "BeachBall" and v:FindFirstChild("TouchInterest") then
+					for i = 1,20 do
+						Savetp(v.CFrame)
+						task.wait(0.03)
+					end
+					break
+				end
+			end
+			Savetp(tppos)
+		end
+		if tonumber(o10.Text) then
+			task.wait(tonumber(o10.Text))
+		else
+			task.wait(4.5)
+		end
+	end
+end)
+
+game.ReplicatedStorage.Remotes.Gameplay.CoinCollected.OnClientEvent:Connect(function(cointype, current, max)
+	IsAutofarmStarted = true
+	if cointype == "BeachBall" and tonumber(current) == tonumber(max) then
+		IsAutofarmStarted = false
+		if ResetPlayerOnDone then
+			Player.Character.Humanoid.Health = 0
+		end
+	end
+end)
+
+game.ReplicatedStorage.Remotes.Gameplay.RoundStart.OnClientEvent:Connect(function()
+	if Autofarmenabled then Player.Character.HumanoidRootPart.CFrame = tppos end
+	IsAutofarmStarted = true
+end)
+
+game.ReplicatedStorage.Remotes.Gameplay.RoundEndFade.OnClientEvent:Connect(function()
+	IsAutofarmStarted = false
+end)
+
+o6.MouseButton1Click:Connect(function()
+	if antiafkenabled == false then
+		antiafkenabled = true
+		o6.TextColor3 = Color3.new(0, 1, 0)
+	else
+		antiafkenabled = false
+		o6.TextColor3 = Color3.new(0, 0, 0)
+	end
+end)
+
+o7.MouseButton1Click:Connect(function()
+	if ResetPlayerOnDone == false then
+		ResetPlayerOnDone = true
+		o7.TextColor3 = Color3.new(0, 1, 0)
+	else
+		ResetPlayerOnDone = false
+		o7.TextColor3 = Color3.new(0, 0, 0)
+	end
+end)
+
+o8.MouseButton1Click:Connect(function()
+	if Autofarmenabled == false then
+		Autofarmenabled = true
+		o8.TextColor3 = Color3.new(0, 1, 0)
+		if returncoincontaier() then IsAutofarmStarted = true end
+	else
+		Autofarmenabled = false
+		o8.TextColor3 = Color3.new(0, 0, 0)
+	end
+end)
+
+o5.MouseButton1Click:Connect(function()
+	o2.Visible = false
+	o11.Visible = true
+end)
+
+o12.MouseButton1Click:Connect(function()
+	o2.Visible = true
+	o11.Visible = false
+end)
