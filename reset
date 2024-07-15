@@ -1,0 +1,24 @@
+local Players = game:GetService("Players")
+
+local function setPlayerHealthToZero(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        setPlayerHealthToZero(character)
+    end)
+end)
+
+local existingPlayers = Players:GetPlayers()
+for i, player in existingPlayers do
+    if player.Character then
+        setPlayerHealthToZero(player.Character)
+    end
+    player.CharacterAdded:Connect(function(character)
+        setPlayerHealthToZero(character)
+    end)
+end
