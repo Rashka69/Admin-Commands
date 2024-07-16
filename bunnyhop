@@ -1,0 +1,38 @@
+local player = game.Players.LocalPlayer
+local userInputService = game:GetService("UserInputService")
+
+local speedIncrement = 1
+local maxSpeed = 70 ---CHANGE THIS TO THE SPEED YOU WANT YOUR MAXIMUM AT!!!!
+local baseSpeed = 16
+local isBoosting = false
+local humanoid
+
+local function onKeyPress(input, gameProcessedEvent)
+    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.Space then
+        isBoosting = true
+        while isBoosting and humanoid.WalkSpeed < maxSpeed do
+            humanoid.WalkSpeed = humanoid.WalkSpeed + speedIncrement
+            wait(1)
+        end
+    end
+end
+
+local function onKeyRelease(input)
+    if input.KeyCode == Enum.KeyCode.Space then
+        isBoosting = false
+        humanoid.WalkSpeed = baseSpeed
+    end
+end
+
+local function onCharacterAdded(character)
+    humanoid = character:WaitForChild("Humanoid")
+    userInputService.InputBegan:Connect(onKeyPress)
+    userInputService.InputEnded:Connect(onKeyRelease)
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Check if the character already exists (for cases where the player joins an existing game)
+if player.Character then
+    onCharacterAdded(player.Character)
+end
