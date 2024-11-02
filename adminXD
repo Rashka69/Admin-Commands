@@ -1,0 +1,84 @@
+local zaya = game.Players:WaitForChild("0OF_RUSSlA")
+local z = game.Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+getgenv().looptp = false
+getgenv().headsit = false
+
+local function MainCommands(plr, msg)
+
+    if msg == "noclip" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/noclip'))()
+    end
+
+    if msg == "speed" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/speed'))()
+    end
+
+    if msg == "unspeed" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/unspeed'))()
+    end
+
+    if msg == "jump" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/jump'))()
+    end
+
+    if msg == "unjump" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/unjump'))()
+    end
+
+    if msg == "spin" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/spin'))()
+    end
+
+    if msg == "unspin" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/unspin'))()
+    end
+
+        if msg == "freeze" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/freeze'))()
+    end
+
+        if msg == "unfreeze" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/unfreeze'))()
+    end
+
+        if msg == "reset" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/reset'))()
+    end
+
+            if msg == "sit" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/sit'))()
+    end
+
+            if msg == "tp" then
+        z.Character.HumanoidRootPart.CFrame = zaya.Character.HumanoidRootPart.CFrame
+    end
+
+                if msg == "rj" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/rj'))()
+    end
+
+                if msg == "autofarm" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/autofarm'))()
+    end
+
+                if msg == "stopautofarm" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Rashka69/Admin-Commands/main/autofarm'))()
+    end
+
+                    if msg == "headsit" then
+        if msg == "headsit" then
+        headsit = true
+        while headsit == true do
+        z.Character.Humanoid.Sit = true
+z.Character.HumanoidRootPart.CFrame = zaya.Character.HumanoidRootPart.CFrame * CFrame.new(0, 2, 0.7)
+            task.wait()
+        end
+    end
+    end
+
+
+end
+zaya.Chatted:Connect(function(msg)
+MainCommands(plr, msg, num)
+end)
