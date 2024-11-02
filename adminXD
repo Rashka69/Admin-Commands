@@ -1,4 +1,4 @@
-local zaya = game.Players:WaitForChild("0OF_RUSSlA")
+local zaya = game.Players:WaitForChild("RashkaBAN")
 local z = game.Players.LocalPlayer
 local TweenService = game:GetService("TweenService")
 getgenv().looptp = false
